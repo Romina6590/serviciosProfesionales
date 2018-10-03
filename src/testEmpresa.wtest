@@ -1,0 +1,51 @@
+import universidades.*
+import empresasDeServicios.*
+import profesionales.*
+
+describe "funcion de empresa"{
+	const sanMartin = new UniversidadTrabajo()
+	const rosario = new UniversidadTrabajo()
+	const corrientes = new UniversidadTrabajo()
+	const hurlingham = new UniversidadTrabajo()
+	const juana = new ProfesionalVinculado()
+	const melina = new ProfesionalAsociado()
+	const rocio = new ProfesionalLibre()
+	const luciana = new ProfesionalLibre()
+	const mYL = new EmpresaDeServicios()
+
+fixture {
+	sanMartin.provincia("Buenos Aires")
+	sanMartin.honorariosRecomendados(3500)
+	rosario.provincia("Santa Fe")
+	rosario.honorariosRecomendados(2800)
+	corrientes.provincia("corrientes")
+	corrientes.honorariosRecomendados(4200)
+	hurlingham.provincia("Buenos Aires")
+	hurlingham.honorariosRecomendados(8800)
+	juana.universidad(rosario)
+	melina.universidad(corrientes)
+	rocio.universidad(hurlingham)
+	rocio.honorariosPorHora(5000)
+	rocio.provinciasDondePuedeTrabajar(#{"Santa Fe","Cordoba","Buenos Aires"})
+	luciana.universidad(rosario)
+	luciana.honorariosPorHora(3200)
+	luciana.provinciasDondePuedeTrabajar(#{"Santa Fe","Entre Rios"})
+	mYL.profesionales(#{juana,melina,rocio,luciana})
+	mYL.honorarioReferencia(3500)
+  }
+  test "profesional caro"{
+  	assert.equals(#{rocio},mYL.profesionalesCaros())
+  }
+  
+  test "universidades formadoras"{
+  	assert.equals(#{rosario,corrientes,hurlingham}, mYL.universidadesFormadoras())
+  }
+  
+  test "profesional mas barato"{
+  	assert.equals(juana, mYL.profesionalBarato())
+  }
+
+
+}
+
+
